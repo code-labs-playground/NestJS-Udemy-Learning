@@ -1,10 +1,10 @@
 {
   "name": "nestjs-task-management",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "A task management application built with NestJS for learning purposes.",
+  "author": "Lahir Liyanage",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
