@@ -11,6 +11,10 @@ export class TasksService {
     return this.tasks;
   }
 
+  getTaskById(id: string): Task | undefined {
+    return this.tasks.find((task) => task.id === id);
+  }
+
   createTask(createTaskDto: CreateTaskDto): Task[] {
     const { title, description } = createTaskDto;
 
@@ -23,5 +27,26 @@ export class TasksService {
 
     this.tasks.push(task);
     return this.tasks;
+  }
+
+  deleteTask(id: string): Task[] {
+    this.tasks = this.tasks.filter((task) => task.id !== id);
+    return this.tasks;
+  }
+
+  updateTask(
+    id: string,
+    title: string,
+    description: string,
+    status: TaskStatus,
+  ): Task | undefined {
+    const task = this.getTaskById(id);
+    if (task) {
+      if (title) task.title = title;
+      if (description) task.description = description;
+      if (status) task.status = status;
+      return task;
+    }
+    return undefined;
   }
 }
