@@ -10,6 +10,14 @@ export class TasksRepository extends Repository<Task> {
     super(Task, dataSource.createEntityManager());
   }
 
+  async getTaskById(id: string): Promise<Task> {
+    const task = await this.findOne({ where: { id: id } });
+    if (!task) {
+      throw new NotFoundException(`Task with ID "${id}" not found`);
+    }
+    return task;
+  }
+
   async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
     const { title, description } = createTaskDto;
 
@@ -29,5 +37,12 @@ export class TasksRepository extends Repository<Task> {
     } else {
       return { message: `Task deleted successfully` };
     }
+  }
+
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id);
+
+    task.status = status;
+    return this.save(task);
   }
 }
