@@ -25,4 +25,8 @@ export class TasksService {
   updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
     return this.tasksRepository.updateTaskStatus(id, status);
   }
+
+  updateTask(id: string, updateData: Partial<Task>): Promise<Task> {
+    return this.tasksRepository.updateTask(id, updateData);
+  }
 }

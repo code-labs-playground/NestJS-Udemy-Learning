@@ -45,4 +45,10 @@ export class TasksRepository extends Repository<Task> {
     task.status = status;
     return this.save(task);
   }
+
+  async updateTask(id: string, updateData: Partial<Task>): Promise<Task> {
+    const task = await this.getTaskById(id);
+    Object.assign(task, updateData);
+    return this.save(task);
+  }
 }
