@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { TaskStatus } from './task-status.enum';
+import { IsEnum } from 'class-validator';
 
 @Entity()
 export class Task {
@@ -13,5 +14,6 @@ export class Task {
   description: string;
 
   @Column()
+  @IsEnum(TaskStatus, { message: 'Status must be a valid TaskStatus' })
   status: TaskStatus;
 }
