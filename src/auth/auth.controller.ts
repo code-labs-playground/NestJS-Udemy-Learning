@@ -11,4 +11,10 @@ export class AuthController {
     // console.log('Received signup request:', authCredentials);
     return this.authService.signUp(authCredentials);
   }
+
+  @Post('signin')
+  signIn(@Body() authCredentials: AuthCredentialsDto): Promise<string> {
+    // console.log('Received signin request:', authCredentials);
+    return this.authService.signIn(authCredentials);
+  }
 }

@@ -39,4 +39,11 @@ export class UsersRepository extends Repository<User> {
       }
     }
   }
+
+  async comparePasswords(
+    plainPassword: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
+    return bcrypt.compare(plainPassword, hashedPassword);
+  }
 }
