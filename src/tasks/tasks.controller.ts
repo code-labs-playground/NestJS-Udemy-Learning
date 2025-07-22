@@ -48,8 +48,11 @@ export class TasksController {
   }
 
   @Delete(':id')
-  async deleteTask(@Param('id') id: string): Promise<{ message: string }> {
-    return this.tasksService.deleteTask(id);
+  async deleteTask(
+    @Param('id') id: string,
+    @GetUser() user: User,
+  ): Promise<{ message: string }> {
+    return this.tasksService.deleteTask(id, user);
   }
 
   @Patch('status/:id')
