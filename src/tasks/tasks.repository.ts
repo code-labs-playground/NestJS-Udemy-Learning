@@ -22,9 +22,10 @@ export class TasksRepository extends Repository<Task> {
       query.andWhere('task.status = :status', { status: TaskStatus[status] });
     }
 
+    // Fixing the filtering bug with "()"
     if (search) {
       query.andWhere(
-        'LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search)',
+        '(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))',
         {
           search: `%${search}%`,
         },
