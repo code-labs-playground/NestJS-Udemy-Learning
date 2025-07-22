@@ -8,7 +8,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix(process.env.PREFIX ?? 'api/v1');
 
   app.useGlobalInterceptors(new TransformInterceptor());
 
