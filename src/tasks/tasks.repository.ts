@@ -12,10 +12,11 @@ export class TasksRepository extends Repository<Task> {
     super(Task, dataSource.createEntityManager());
   }
 
-  async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+  async getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
     const { status, search } = filterDto;
 
     const query = this.createQueryBuilder('task');
+    query.where({ user });
 
     if (status) {
       query.andWhere('task.status = :status', { status: TaskStatus[status] });
@@ -34,8 +35,8 @@ export class TasksRepository extends Repository<Task> {
     return tasks;
   }
 
-  async getTaskById(id: string): Promise<Task> {
-    const task = await this.findOne({ where: { id: id } });
+  async getTaskById(id: string, user: User): Promise<Task> {
+    const task = await this.findOne({ where: { id: id, user: user } });
     if (!task) {
       throw new NotFoundException(`Task with ID "${id}" not found`);
     }
@@ -64,14 +65,22 @@ export class TasksRepository extends Repository<Task> {
     }
   }
 
-  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
-    const task = await this.getTaskById(id);
+  async updateTaskStatus(
+    id: string,
+    status: TaskStatus,
+    user: User,
+  ): Promise<Task> {
+    const task = await this.getTaskById(id, user);
     task.status = status;
     return this.save(task);
   }
 
-  async updateTask(id: string, updateData: Partial<Task>): Promise<Task> {
-    const task = await this.getTaskById(id);
+  async updateTask(
+    id: string,
+    updateData: Partial<Task>,
+    user: User,
+  ): Promise<Task> {
+    const task = await this.getTaskById(id, user);
     Object.assign(task, updateData);
     return this.save(task);
   }

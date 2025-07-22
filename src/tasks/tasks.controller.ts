@@ -24,13 +24,19 @@ export class TasksController {
   constructor(private tasksService: TasksService) {}
 
   @Get('all')
-  async getTasks(@Query() filterDto: GetTasksFilterDto): Promise<Task[]> {
-    return this.tasksService.getTasks(filterDto);
+  async getTasks(
+    @Query() filterDto: GetTasksFilterDto,
+    @GetUser() user: User,
+  ): Promise<Task[]> {
+    return this.tasksService.getTasks(filterDto, user);
   }
 
   @Get(':id')
-  async getTaskById(@Param('id') id: string): Promise<Task> {
-    return this.tasksService.getTaskById(id);
+  async getTaskById(
+    @Param('id') id: string,
+    @GetUser() user: User,
+  ): Promise<Task> {
+    return this.tasksService.getTaskById(id, user);
   }
 
   @Post()
@@ -49,16 +55,18 @@ export class TasksController {
   @Patch('status/:id')
   async updateTaskStatus(
     @Param('id') id: string,
+    @GetUser() user: User,
     @Body('status') status: TaskStatus,
   ): Promise<Task> {
-    return this.tasksService.updateTaskStatus(id, status);
+    return this.tasksService.updateTaskStatus(id, status, user);
   }
 
   @Patch('update/:id')
   async updateTask(
     @Param('id') id: string,
+    @GetUser() user: User,
     @Body() updateData: Partial<Task>,
   ): Promise<Task> {
-    return this.tasksService.updateTask(id, updateData);
+    return this.tasksService.updateTask(id, updateData, user);
   }
 }

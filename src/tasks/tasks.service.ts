@@ -12,12 +12,12 @@ export class TasksService {
     private tasksRepository: TasksRepository, // Inject the custom repository directly
   ) {}
 
-  getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
-    return this.tasksRepository.getTasks(filterDto);
+  getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
+    return this.tasksRepository.getTasks(filterDto, user);
   }
 
-  async getTaskById(id: string): Promise<Task> {
-    return this.tasksRepository.getTaskById(id);
+  async getTaskById(id: string, user: User): Promise<Task> {
+    return this.tasksRepository.getTaskById(id, user);
   }
 
   createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
@@ -28,11 +28,11 @@ export class TasksService {
     return this.tasksRepository.deleteTask(id);
   }
 
-  updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
-    return this.tasksRepository.updateTaskStatus(id, status);
+  updateTaskStatus(id: string, status: TaskStatus, user: User): Promise<Task> {
+    return this.tasksRepository.updateTaskStatus(id, status, user);
   }
 
-  updateTask(id: string, updateData: Partial<Task>): Promise<Task> {
-    return this.tasksRepository.updateTask(id, updateData);
+  updateTask(id: string, updateData: Partial<Task>, user: User): Promise<Task> {
+    return this.tasksRepository.updateTask(id, updateData, user);
   }
 }
