@@ -19,7 +19,7 @@ export class Task {
   @IsEnum(TaskStatus, { message: 'Status must be a valid TaskStatus' })
   status: TaskStatus;
 
-  @ManyToOne((type) => User, (user) => user.tasks, { eager: false })
+  @ManyToOne(() => User, (user) => user.tasks, { eager: false })
   @Exclude({ toPlainOnly: true }) // Exclude user from plain object representation
   user: User;
 }
